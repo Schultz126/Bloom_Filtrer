@@ -1,0 +1,6 @@
+@charset "UTF-8";
+
+span.foreignWord {
+    font-style: italic;
+    font-weight: light;;
+}
