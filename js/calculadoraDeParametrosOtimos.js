@@ -23,12 +23,12 @@ document.querySelector('input#calculate').addEventListener('click', function(eve
     /*
         ---- Função verificadora dos inputs ----
         Sua principal função será a de retornar um valor 
-        diferente para cada possibilidade de input deixados em branco
+        diferente para cada possibilidade de inputs deixados em branco
     */
     function inputBoxesVerifier() {
         let k = hashNumber.value;
         let m = bits.value;
-        let n = numberOfElements.value;
+        let n = numberOfElementsInput.value;
         let camposVazios = 0;
 
         if(k === null || k === "") camposVazios++;
@@ -40,7 +40,7 @@ document.querySelector('input#calculate').addEventListener('click', function(eve
     }
     let k = hashNumber.value;
     let m = bits.value;
-    let n = numberOfElements.value;
+    let n = numberOfElementsInput.value;
     switch(inputBoxesVerifier()) {
         case 0:
             mostrarAviso("Deixe ao menos UM campo vazio");
@@ -73,5 +73,6 @@ document.querySelector('input#calculate').addEventListener('click', function(eve
             break;
         case 3:
             mostrarAviso("Deixe somente UM campo vazio");
+            break;
     }
 })

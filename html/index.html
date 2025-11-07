@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="../css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Pattaya&display=swap" rel="stylesheet">
@@ -166,11 +166,11 @@
                 <h2>Calculadora de parâmetros ótimos</h2>
                 <form id="calcForm" method="post">
 
-                    <label for="hashNumber">Valor da função hash: </label><input type="number" name="hashNumber" id="hashNumber">
+                    <label for="hashNumber">Valor da função hash: </label><input type="number" name="hashNumber" id="hashNumber" min="1">
      
-                    <label for="bits">Quantidade de bits: </label><input type="number" name="bits" id="bits">
+                    <label for="bits">Quantidade de bits: </label><input type="number" name="bits" id="bits" min="1">
              
-                    <label for="numberOfElements">Número de elementos</label><input type="number" name="numberOfElements" id="numberOfElements">
+                    <label for="numberOfElements">Número de elementos</label><input type="number" name="numberOfElements" id="numberOfElements" min="1">
                     <input type="submit" id="calculate">
                 </form>
             </article>
@@ -192,7 +192,7 @@
     <p>© 2025 - Estrutura de Dados</p>
   </footer>
 
-<script src="js/script.js"></script>
-<script src="js/calculadoraDeParametrosOtimos.js"></script>
+<script src="../js/script.js"></script>
+<script src="../js/calculadoraDeParametrosOtimos.js"></script>
 </body>
 </html>
