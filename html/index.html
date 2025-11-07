@@ -1,162 +1,207 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Pattaya&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/textStyles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pattaya&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
 
-    <title>Bloom Filter</title>
+  <title>Bloom Filter</title>
 </head>
-<body>
-    <header>
-        <h1>Bloom Filter</h1>
-    </header>
 
-    <div class="scene">
-        <div class="flower" id="flower">
-            <div class="bud"></div>
-            <div class="center"></div>
-            <div class="petal"></div>
-            <div class="petal"></div>
-            <div class="petal"></div>
-            <div class="petal"></div>
-            <div class="petal"></div>
-            <div class="petal"></div>
+<body>
+  <header>
+    <h1>Bloom Filter</h1>
+  </header>
+
+  <div class="scene">
+    <div class="flower" id="flower">
+      <div class="bud"></div>
+      <div class="center"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+      <div class="petal"></div>
+    </div>
+  </div>
+
+  <main>
+    <section id="intro">
+      <h2>INTRODUÇÃO</h2>
+      <div class="navegador">
+  <div class="barra-superior">
+    <div class="abas">
+      <span class="aba ativa">INTRODUÇÃO</span>
+    </div>
+    <div class="botoes">
+      <button class="min"></button>
+      <button class="max"></button>
+      <button class="fechar"></button>
+    </div>
+  </div>
+
+  <div class="barra-endereco">
+    <button class="voltar">←</button>
+    <input type="" placeholder="Digite um endereço ou pesquisa...">
+    <button class="ir">⟳</button>
+  </div>
+
+  <div class="conteudo-navegador">
+    <p>Um Bloom Filter é uma estrutura de dados probabilística que analisa se uma informação está num conjunto de dados sem precisar acessar a memória em disco. Eventualmente, a estrutura pode apontar um falso positivo (indicando que um elemento está em um conjunto quando, na verdade, não está). Entretanto, jamais gera um falso negativo. Quanto mais elementos são adicionados a uma Bloom filter, maiores são as chances de um falso positivo.</p>
+      <p>Ou seja, é possível enviar para o “lado cliente” de um software informação suficiente para reduzir dramaticamente requests inócuos e, por consequência, trafego na rede, acessos a “disco” e alocações desnecessárias em memória. Afinal, antes de fazer uma requisição ao servidor para verificar a “presença” de um dado em um conjunto, bastaria o “lado cliente” consultar, antes, ao filtro, podendo prover feedback muito mais rápido sem onerar o backend.</p>
+      <p>O segredo para a eficiência dessa estrutura de dados é a utilização de hashes de qualidade que são utilizados para ligar ou desligar bits em um mapa. Sempre que um dado é “incluído” no filtro, os bits correspondentes do hash são ligados.</p>
+      <p>Ou seja, é possível enviar para o “lado cliente” de um software informação suficiente para reduzir dramaticamente requests inócuos e, por consequência, trafego na rede, acessos a “disco” e alocações desnecessárias em memória. Afinal, antes de fazer uma requisição ao servidor para verificar a “presença” de um dado em um conjunto, bastaria o “lado cliente” consultar, antes, ao filtro, podendo prover feedback muito mais rápido sem sobrecarregar o backend.</p>
+      <p>O segredo para a eficiência dessa estrutura de dados é a utilização de hashes de qualidade que são utilizados para ligar ou desligar bits em um mapa. Sempre que um dado é “incluído” no filtro, os bits correspondentes do hash são ligados. Em sistemas distribuídos ou que manipulam grandes volumes de dados, a verificação direta em estruturas completas pode ser inviável devido ao custo de memória e tempo. Assim, o Bloom Filter se torna uma alternativa leve para consultas rápidas.</p>
+  </div>
+</div>
+    </section>
+
+    <section id="contextoHistorico">
+      <h2>Contexto histórico</h2>
+           <p>Esta estrutura de dados foi concebida por Burton Howard Bloom em 1970 que demanda pouco espaço. Ela é utilizada para testar se um elemento está presente em um conjunto sem necessitar consultar a lista completa de elementos presente nesse conjunto.</p>
+            <p>O trabalho de Pagh, em 2005 propõe uma estrutura de dados de Bloom Filter teoricamente quase ótima em espaço, usando hashing perfeito para lidar com conjuntos de chaves estáticos. Essa estrutura, porém, não era prática por duas razões.</p>
+            <p>Primeiro, na época, só existiam algoritmos teóricos de hashing perfeito quase ótimo em espaço. Esse problema foi resolvido com novos desenvolvimentos em funções de hash perfeitas, que requerem aproximadamente 2,6 bits por chave armazenada e podem ser avaliadas em tempo O(1).</p>
+            <p>Segundo, não era possível representar uma função hash totalmente aleatória sem desperdiçar O(n log n) bits. Esse problema foi resolvido pela técnica split-and-share, proposta em 2007 por Dietzfelbinger e Weidling, tornando possível usar O(n) bits para representar uma função hash totalmente aleatória.</p>
+    </section>
+
+    <section id="explicacaoTecnica">
+      <h2>Explicação Técnica</h2>
+      <p>Um filtro de Bloom funciona armazenando o conjunto S como um vetor de bits BS, em que os bits são ativados por um conjunto de funções hash verdadeiramente aleatórias. Ele começa como um vetor de todos os bits 0. Cada elemento xi do conjunto S é hasheado k vezes, e cada hash gera uma posição de bit que é configurada como 1. Para verificar se um elemento y pertence ao conjunto, faz-se o hash dele k vezes e verifica-se se os bits correspondentes estão definidos como 1.</p>
+      <article id="falsosPositivos">
+        <p>Dada a possibilidade de ocorrência de resultados falsos positivos, o Bloom filter é uma estrutura de dados especialmente adequada para cenários em que os métodos convencionais (não probabilísticos, livres de erros) para responder a testes de membresia demandem uma quantidade impraticável de espaço. Ademais, Bloom sugere o uso dessa estrutura para aplicações em que a grande maioria dos elementos testados não fazem parte do conjunto representado pela estrutura. Define-se tempo de rejeição como o tempo médio dispendido por uma estrutura de dados para decidir que um dado elemento não pertence ao conjunto representado. De fato, o Bloom filter permite diminuir o consumo de espaço sem acrescer o tempo de rejeição, o que ocorre com o custo de resultados falsos positivos e impossibilidade de remoção de elementos da estrutura.</p>
+        <p>Dada a possibilidade de ocorrência de resultados falsos positivos, o Bloom filter é uma estrutura de dados especialmente adequada para cenários em que os métodos convencionais (não probabilísticos, livres de erros) para responder a testes de membresia demandem uma quantidade impraticável de espaço. Ademais, Bloom sugere o uso dessa estrutura para aplicações em que a grande maioria dos elementos testados não fazem parte do conjunto representado pela estrutura. De fato, o Bloom filter permite diminuir o consumo de espaço sem acrescer o tempo de rejeição(tempo médio dispendido por uma estrutura de dados para decidir que um dado elemento não pertence ao conjunto representado), o que ocorre com o custo de resultados falsos positivos e impossibilidade de remoção de elementos da estrutura.</p>
+        <div id="grafico">
+          <img src="" alt="Gráfico falsos positivos vs tamanho do filtro">
         </div>
+      </article>
+    </section>
+    
+<section class="perfil">
+  <div class="perfil-container">
+    <div class="perfil-texto">
+      <h1>COMPLEXIDADE DE TEMPO</h1>
+      <div class="janela">
+  <div class="barra-titulo">
+    <span class="titulo">SOBRE</span>
+    <div class="botoes">
+      <button class="min"></button>
+      <button class="max"></button>
+      <button class="fechar"></button>
+    </div>
+  </div>
+  <div class="conteudo">
+    <p>Em qualquer aplicação em que falsos positivos não causem problemas significativos, apenas uma aproximação de S pode ser armazenada em vez de guardar explicitamente o conjunto, fornecendo assim uma representação mais compacta que pode caber na memória. Se cada elemento que não pertence a S for um falso positivo com probabilidade de, no máximo, &#491;, então o número de bits necessários para armazenar a aproximação é aproximadamente n log₂ (1/&#491;), enquanto, para evitar falsos positivos, seria necessário armazenar S em pelo menos n log₂ n bits.</p>
+      <p>Considere o conjunto S' &supseteq; S, que inclui os elementos armazenados, inclusive os falsos positivos. O conjunto S' é escolhido de forma que qualquer elemento que não pertença a S tenha probabilidade de, no máximo, &#491; de pertencer a S'. Um filtro de Bloom (Bloom, 1970) é uma estrutura de dados extremamente compacta e elegante para representar um conjunto S' adequado.</p>
+    <div class="perfil-imagem">
+      <img src="" alt="COMPLEXIDADE DE TEMPO">
+    </div>
+  </div>
+</div>
+    </div>
+  </div>
+</section>
+
+    
+<section class="comparacao">
+  <h2>Comparação com estruturas similares</h2>
+  <div class="comparacao-row">
+    <div class="comparacao-card">
+      <h3>Cuckoo Filter</h3>
+      <p>O Cuckoo filter é proposto como uma alternativa ao Bloom filter tradicional para os cenários em que haja remoção de elementos da estrutura, mas sem que haja necessidade de usar um espaço adicional. Vantagens do cuckoo filter sobre o Bloom filter tradicional e outros filtros que permitem remoções de elementos:</p>
+      <li>Permite adicionar e remover itens dinamicamente;</li>
+          <li>Fornece melhor desempenho de consultas do que o Bloom filter tradicional, mesmo quando está quase cheio (com 95% do espaço utilizado, por exemplo);</li>
+          <li>É mais fácil de implementar do que alternativas como o quotient filter;</li>
+          <li>Usa menos espaço que os Bloom filters em muitas aplicações práticas se a razão de falsos positivos 𝜖 alvo é menor que 3%.</li>
     </div>
 
-    <main>
-        <section id="intro">
-            <h2>Introdução</h2>
-            <p>Um Bloom Filter é uma estrutura de dados probabilística que analisa se uma informação está num conjunto de dados sem precisar acessar a memória em disco. Eventualmente, a estrutura pode apontar um falso positivo (indicando que um elemento está em um conjunto quando, na verdade, não está). Entretanto, jamais gera um falso negativo. Quanto mais elementos são adicionados a uma Bloom filter, maiores são as chances de um falso positivo.</p>
-            <p>Ou seja, é possível enviar para o “lado cliente” de um software informação suficiente para reduzir dramaticamente requests inócuos e, por consequência, trafego na rede, acessos a “disco” e alocações desnecessárias em memória. Afinal, antes de fazer uma requisição ao servidor para verificar a “presença” de um dado em um conjunto, bastaria o “lado cliente” consultar, antes, ao filtro, podendo prover feedback muito mais rápido sem onerar o backend.</p>
-            <p>O segredo para a eficiência dessa estrutura de dados é a utilização de hashes de qualidade que são utilizados para ligar ou desligar bits em um mapa. Sempre que um dado é “incluído” no filtro, os bits correspondentes do hash são ligados.</p>
-            <p>Ou seja, é possível enviar para o “lado cliente” de um software informação suficiente para reduzir dramaticamente requests inócuos e, por consequência, trafego na rede, acessos a “disco” e alocações desnecessárias em memória. Afinal, antes de fazer uma requisição ao servidor para verificar a “presença” de um dado em um conjunto, bastaria o “lado cliente” consultar, antes, ao filtro, podendo prover feedback muito mais rápido sem sobrecarregar o backend.</p>
-            <p>O segredo para a eficiência dessa estrutura de dados é a utilização de hashes de qualidade que são utilizados para ligar ou desligar bits em um mapa. Sempre que um dado é “incluído” no filtro, os bits correspondentes do hash são ligados. Em sistemas distribuídos ou que manipulam grandes volumes de dados, a verificação direta em estruturas completas pode ser inviável devido ao custo de memória e tempo. Assim, o Bloom Filter se torna uma alternativa leve para consultas rápidas.</p>
-        </section>
+    <div class="comparacao-card">
+      <h3>Quotient Filter</h3>
+      <li>Melhor desempenho poque requer apenas uma consulta de cache em média;</li>
+          <li>também suporta a exclusão, mas não elimina outros dados ao mesmo tempo;</li>
+          <li>Não altera a taxa de falso positivo.</li>
+    </div>
 
-        <section id="contextoHistorico">
-            <h2>Contexto histórico</h2>
+    <div class="comparacao-card">
+      <h3>Counting Bloom Filter</h3>
+      <li>Usa contadores ao invés de bits simples;</li>
+          <li>utiliza mais memória;</li>
+          <li>Mas durante uma remoção, ele pode invalidar um bit que estava sendo utilizado por outro dado.</li>
+    </div>
+  </div>
+</section>
 
-        </section>
 
-        <section id="explicacaoTecnica">
-            <h2>Explicação Técnica</h2>
-            <p>Um filtro de Bloom funciona armazenando o conjunto S como um vetor de bits BS, em que os bits são ativados por um conjunto de funções hash verdadeiramente aleatórias. Ele começa como um vetor de todos os bits 0. Cada elemento xi do conjunto S é hasheado k vezes, e cada hash gera uma posição de bit que é configurada como 1. Para verificar se um elemento y pertence ao conjunto, faz-se o hash dele k vezes e verifica-se se os bits correspondentes estão definidos como 1.</p>
-            <article id="falsosPositivos">
-                <p>Dada a possibilidade de ocorrência de resultados falsos positivos, o Bloom filter é uma estrutura de dados especialmente adequada para cenários em que os métodos convencionais (não probabilísticos, livres de erros) para responder a testes de membresia demandem uma quantidade impraticável de espaço. Ademais, Bloom sugere o uso dessa estrutura para aplicações em que a grande maioria dos elementos testados não fazem parte do conjunto representado pela estrutura. Define-se tempo de rejeição como o tempo médio dispendido por uma estrutura de dados para decidir que um dado elemento não pertence ao conjunto representado. De fato, o Bloom filter permite diminuir o consumo de espaço sem acrescer o tempo de rejeição, o que ocorre com o custo de resultados falsos positivos e impossibilidade de remoção de elementos da estrutura.</p>
-              <p>Dada a possibilidade de ocorrência de resultados falsos positivos, o Bloom filter é uma estrutura de dados especialmente adequada para cenários em que os métodos convencionais (não probabilísticos, livres de erros) para responder a testes de membresia demandem uma quantidade impraticável de espaço. Ademais, Bloom sugere o uso dessa estrutura para aplicações em que a grande maioria dos elementos testados não fazem parte do conjunto representado pela estrutura. De fato, o Bloom filter permite diminuir o consumo de espaço sem acrescer o tempo de rejeição(tempo médio dispendido por uma estrutura de dados para decidir que um dado elemento não pertence ao conjunto representado), o que ocorre com o custo de resultados falsos positivos e impossibilidade de remoção de elementos da estrutura.</p>
-                <div id="grafico">
-                    <img src="../images/grafico.FalsoPositivoVSTamanhoDoFiltro.png" alt="Gráfico falsos positivos vs tamanho do filtro">
-                </div>
-            </article>
-        </section>
-      
-    <section id="assintotica">
-            <h2>Complexidade de tempo</h2>
-            <p>Em qualquer aplicação em que falsos positivos não causem problemas significativos, apenas uma aproximação de S pode ser armazenada em vez de guardar explicitamente o conjunto, fornecendo assim uma representação mais compacta que pode caber na memória. Se cada elemento que não pertence a S for um falso positivo com probabilidade de, no máximo, &#491;, então o número de bits necessários para armazenar a aproximação é aproximadamente n log₂ (1/&#491;), enquanto, para evitar falsos positivos, seria necessário armazenar S em pelo menos n log₂ n bits.</p>
-            <p>Considere o conjunto S' &supseteq; S, que inclui os elementos armazenados, inclusive os falsos positivos. O conjunto S' é escolhido de forma que qualquer elemento que não pertença a S tenha probabilidade de, no máximo, &#491; de pertencer a S'. Um filtro de Bloom (Bloom, 1970) é uma estrutura de dados extremamente compacta e elegante para representar um conjunto S' adequado.</p>
-        </section>
-        <section id="estruturasSimilares">
-            <h2>Comparação com estruturas similares</h2>
-            <article id="cuckooFilter">
-                <h3>Cuckoo Filter</h3>
-                <p>O Cuckoo filter é proposto como uma alternativa ao Bloom filter tradicional para os cenários em que haja remoção de elementos da estrutura, mas sem que haja necessidade de usar um espaço adicional. Vantagens do cuckoo filter sobre o Bloom filter tradicional e outros filtros que permitem remoções de elementos:</p>
-                <ul>
-                    <li>Permite adicionar e remover itens dinamicamente;</li>
-                    <li>Fornece melhor desempenho de consultas do que o Bloom filter tradicional, mesmo quando está quase cheio (com 95% do espaço utilizado, por exemplo);</li>
-                    <li>É mais fácil de implementar do que alternativas como o quotient filter;</li>
-                    <li>Usa menos espaço que os Bloom filters em muitas aplicações práticas se a razão de falsos positivos 𝜖 alvo é menor que 3%.</li>
-                </ul>
-            </article>
-            <article id="quaotientFilter">
-                <h3>Quotient Filter</h3>
-              <ul>
-                    <li>Melhor desempenho poque requer apenas uma consulta de cache em média;</li>
-                    <li>também suporta a exclusão, mas não elimina outros dados ao mesmo tempo;</li>
-                    <li>Não altera a taxa de falso positivo.</li>
-                </ul>
-            </article>
-            <article id="countingBloomFilter">
-                <h3>Counting Bloom Filter</h3>
-                <ul>
-                    <li>Usa contadores ao invés de bits simples;</li>
-                    <li>utiliza mais memória;</li>
-                    <li>Mas durante uma remoção, ele pode invalidar um bit que estava sendo utilizado por outro dado.</li>
-                </ul>
-            </article>
-        </section>
-        <section>
-            <h2>Aplicações</h2>
-            <article id="redesP2P"> 
-                <h3>Redes P2P/ Overlay</h3>
-                <ul>
-                    <li>Redes P2P de tamanho moderado;</li>
-                  <li>Reconciliação aproximada de conjuntos para entrega de conteúdo;</li>
-                    <li>Interseção de conjuntos para buscas por palavra-chave.</li>
-                </ul>
-            </article>
-            <article id="recursos">
-                <h3>Roteamento</h3>
-                <ul>
-                    <li>Um protocolo básico de roteamento</li>
-                    <li>Roteamento de recursos em redes P2P</li>
-                    <li>Roteamento geográfico</li>
-                </ul>
-            </article>
-            <article id="pacotes">
-                <h3>Roteamento de Pacotes</h3>
-                <ul>
-                    <li>Detecção de loops no Icarus</li>
-                    <li>Gerenciamento de filas: Stochastic Fair Blue</li>
-                    <li>Multicast</li>
-                </ul>
-            </article>
-        </section>
-      </ul>
-            </article>
-        </section>
-        <section id="simulacao">
-                <article id="calculadora">
+   <section class="gallery">
+  <h2>APLICAÇÕES</h2>
+  <div class="texts">
+    <div class="text-box">
+      <h3>Redes P2P/ Overlay</h3>
+      <p><li>Redes P2P de tamanho moderado;</li>
+          <li>Reconciliação aproximada de conjuntos para entrega de conteúdo;</li>
+          <li>Interseção de conjuntos para buscas por palavra-chave.</li>
+</p>
+    </div>
+    <div class="text-box">
+      <h3>Roteamento</h3>
+      <p><li>Um protocolo básico de roteamento</li>
+          <li>Roteamento de recursos em redes P2P</li>
+          <li>Roteamento geográfico</li>
+</p>
+    </div>
+    <div class="text-box">
+      <h3>Roteamento de Pacotes</h3>
+      <p><li>Detecção de loops no Icarus</li>
+          <li>Gerenciamento de filas: Stochastic Fair Blue</li>
+          <li>Multicast</li></p>
+    </div>
+  </div>
+</section>
+
+
+    <section id="simulacao">
+<article id="calculadora">
                 <h2>Calculadora de parâmetros ótimos</h2>
                 <form id="calcForm" method="post">
-                    <!--hashNumber = k-->
+
                     <label for="hashNumber">Valor da função hash: </label><input type="number" name="hashNumber" id="hashNumber">
-                    <!--bits = m-->
+     
                     <label for="bits">Quantidade de bits: </label><input type="number" name="bits" id="bits">
-                    <!--numberOfElements = n-->
+             
                     <label for="numberOfElements">Número de elementos</label><input type="number" name="numberOfElements" id="numberOfElements">
                     <input type="submit" id="calculate">
                 </form>
             </article>
             </article>
-        </section>
-        <section id="referenciasBibliograficas">
-            <h3>Referências Bibliográficas</h3>
-            <ul>
-                <li><a href=" https://homepages.dcc.ufmg.br/~nivio/papers/iadis-www-internet11.pdf" target="_blank">NÍVIO, M.; et al. Minimal perfect hashing and Bloom filters: a practical implementation for static sets. IADIS International Journal on WWW/Internet, v. 11, n. 2, p. xx-yy, 2013.</a></li>
-                <li><a href="https://www.eecs.harvard.edu/~michaelm/NEWWORK/postscripts/BloomFilterSurvey.pdf" target="_blank">BRODER, A.; MITZENMACHER, M. Network applications of Bloom filters: a survey. Harvard University / IBM Research, 2004</a></li>
-                <li><a href="https://linux.ime.usp.br/~mbsilva/mac0499/monografia.pdf" target="_blank">SILVA, M. B. Estudo do efeito de variações de Bloom filters no desempenho de algoritmos de hifenização de palavras. 2022. 43 f. Monografia (Bacharelado em Ciência da Computação) — Instituto de Matemática e Estatística, Universidade de São Paulo, São Paulo, 2022.</a></li>
-                <li><a href="https://eximia.co/como-bloom-filter-pode-ser-utilizada-para-melhorar-a-performance/" target="_blank">JÚNIOR, Elemar. Como “Bloom Filter” pode ser utilizada para melhorar a performance. EximiaCo Insights, 30 jun. 2020</a></li>
-            </ul>
-        </section>
+    </section>
+    <section id="referenciasBibliograficas">
+      <h3>Referências Bibliográficas</h3>
+      <ul>
+        <li><a href=" https://homepages.dcc.ufmg.br/~nivio/papers/iadis-www-internet11.pdf" target="_blank">NÍVIO, M.; et al. Minimal perfect hashing and Bloom filters: a practical implementation for static sets. IADIS International Journal on WWW/Internet, v. 11, n. 2, p. xx-yy, 2013.</a></li>
+        <li><a href="https://www.eecs.harvard.edu/~michaelm/NEWWORK/postscripts/BloomFilterSurvey.pdf" target="_blank">BRODER, A.; MITZENMACHER, M. Network applications of Bloom filters: a survey. Harvard University / IBM Research, 2004</a></li>
+        <li><a href="https://linux.ime.usp.br/~mbsilva/mac0499/monografia.pdf" target="_blank">SILVA, M. B. Estudo do efeito de variações de Bloom filters no desempenho de algoritmos de hifenização de palavras. 2022. 43 f. Monografia (Bacharelado em Ciência da Computação) — Instituto de Matemática e Estatística, Universidade de São Paulo, São Paulo, 2022.</a></li>
+        <li><a href="https://eximia.co/como-bloom-filter-pode-ser-utilizada-para-melhorar-a-performance/" target="_blank">JÚNIOR, Elemar. Como “Bloom Filter” pode ser utilizada para melhorar a performance. EximiaCo Insights, 30 jun. 2020</a></li>
+      </ul>
+    </section>
 
-    </main>
+  </main>
 
-    <footer>
-        <p>© 2025 - Estrutura de Dados</p>
-    </footer>
+  <footer>
+    <p>© 2025 - Estrutura de Dados</p>
+  </footer>
 
-    <script>
-      window.addEventListener('load', () => {
-        setTimeout(() => {
-          document.getElementById('flower').classList.add('open');
-        }, 1000);
-      });
-    </script>
-    <script src="../js/calculadoraDeParametrosOtimos.js"></script>
+  <script>
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('flower').classList.add('open');
+      }, 1000);
+    });
+  </script>
+  <script src="../js/calculadoraDeParametrosOtimos.js"></script>
 </body>
 </html>
