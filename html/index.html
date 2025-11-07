@@ -1,63 +1,61 @@
-<!--
-    ------[Introdução e contexto histórico]
-    ------[Explicação técnica detalhada]
-    - Visualização interativa ou animação
-    - Exemplos de código comentados
-    ------[Análise de complexidade]
-    ------[Aplicações práticas]
-    ------[Comparação com estruturas similares]
-    ------[Referências bibliográficas]
-
-
--->
-<!--
-    - Visualização do array de bits e funções hash
-    - Demonstração interativa de inserção e consulta
-    ------[Gráfico: taxa de falso positivo vs. tamanho do filtro]
-    - Calculadora de parâmetros ótimos (tamanho e número de hashes)
-    ------[Implementação em C com funções hash]
-
--->
-
-<!--Gabi, coloquei os estilos de forma provisória. Substitua-os como bem entender-->
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pattaya&display=swap" rel="stylesheet">
+
     <title>Bloom Filter</title>
 </head>
 <body>
     <header>
         <h1>Bloom Filter</h1>
     </header>
+
+    <div class="scene">
+        <div class="flower" id="flower">
+            <div class="bud"></div>
+            <div class="center"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+            <div class="petal"></div>
+        </div>
+    </div>
+
     <main>
         <section id="intro">
             <h2>Introdução</h2>
             <p>Um Bloom Filter é uma estrutura de dados probabilística que analisa se uma informação está num conjunto de dados sem precisar acessar a memória em disco. Eventualmente, a estrutura pode apontar um falso positivo (indicando que um elemento está em um conjunto quando, na verdade, não está). Entretanto, jamais gera um falso negativo. Quanto mais elementos são adicionados a uma Bloom filter, maiores são as chances de um falso positivo.</p>
             <p>Ou seja, é possível enviar para o “lado cliente” de um software informação suficiente para reduzir dramaticamente requests inócuos e, por consequência, trafego na rede, acessos a “disco” e alocações desnecessárias em memória. Afinal, antes de fazer uma requisição ao servidor para verificar a “presença” de um dado em um conjunto, bastaria o “lado cliente” consultar, antes, ao filtro, podendo prover feedback muito mais rápido sem onerar o backend.</p>
             <p>O segredo para a eficiência dessa estrutura de dados é a utilização de hashes de qualidade que são utilizados para ligar ou desligar bits em um mapa. Sempre que um dado é “incluído” no filtro, os bits correspondentes do hash são ligados.</p>
+            <p>Ou seja, é possível enviar para o “lado cliente” de um software informação suficiente para reduzir dramaticamente requests inócuos e, por consequência, trafego na rede, acessos a “disco” e alocações desnecessárias em memória. Afinal, antes de fazer uma requisição ao servidor para verificar a “presença” de um dado em um conjunto, bastaria o “lado cliente” consultar, antes, ao filtro, podendo prover feedback muito mais rápido sem sobrecarregar o backend.</p>
+            <p>O segredo para a eficiência dessa estrutura de dados é a utilização de hashes de qualidade que são utilizados para ligar ou desligar bits em um mapa. Sempre que um dado é “incluído” no filtro, os bits correspondentes do hash são ligados. Em sistemas distribuídos ou que manipulam grandes volumes de dados, a verificação direta em estruturas completas pode ser inviável devido ao custo de memória e tempo. Assim, o Bloom Filter se torna uma alternativa leve para consultas rápidas.</p>
         </section>
+
         <section id="contextoHistorico">
             <h2>Contexto histórico</h2>
-            <p>Esta estrutura de dados foi concebida por Burton Howard Bloom em 1970 que demanda pouco espaço. Ela é utilizada para testar se um elemento está presente em um conjunto sem necessitar consultar a lista completa de elementos presente nesse conjunto.</p>
-            <p>O trabalho de Pagh, em 2005 propõe uma estrutura de dados de Bloom Filter teoricamente quase ótima em espaço, usando hashing perfeito para lidar com conjuntos de chaves estáticos. Essa estrutura, porém, não era prática por duas razões.</p>
-            <p>Primeiro, na época, só existiam algoritmos teóricos de hashing perfeito quase ótimo em espaço. Esse problema foi resolvido com novos desenvolvimentos em funções de hash perfeitas, que requerem aproximadamente 2,6 bits por chave armazenada e podem ser avaliadas em tempo O(1).</p>
-            <p>Segundo, não era possível representar uma função hash totalmente aleatória sem desperdiçar O(n log n) bits. Esse problema foi resolvido pela técnica split-and-share, proposta em 2007 por Dietzfelbinger e Weidling, tornando possível usar O(n) bits para representar uma função hash totalmente aleatória.</p>
+
         </section>
-        <section id="explicacao">
+
+        <section id="explicacaoTecnica">
             <h2>Explicação Técnica</h2>
             <p>Um filtro de Bloom funciona armazenando o conjunto S como um vetor de bits BS, em que os bits são ativados por um conjunto de funções hash verdadeiramente aleatórias. Ele começa como um vetor de todos os bits 0. Cada elemento xi do conjunto S é hasheado k vezes, e cada hash gera uma posição de bit que é configurada como 1. Para verificar se um elemento y pertence ao conjunto, faz-se o hash dele k vezes e verifica-se se os bits correspondentes estão definidos como 1.</p>
             <article id="falsosPositivos">
                 <p>Dada a possibilidade de ocorrência de resultados falsos positivos, o Bloom filter é uma estrutura de dados especialmente adequada para cenários em que os métodos convencionais (não probabilísticos, livres de erros) para responder a testes de membresia demandem uma quantidade impraticável de espaço. Ademais, Bloom sugere o uso dessa estrutura para aplicações em que a grande maioria dos elementos testados não fazem parte do conjunto representado pela estrutura. Define-se tempo de rejeição como o tempo médio dispendido por uma estrutura de dados para decidir que um dado elemento não pertence ao conjunto representado. De fato, o Bloom filter permite diminuir o consumo de espaço sem acrescer o tempo de rejeição, o que ocorre com o custo de resultados falsos positivos e impossibilidade de remoção de elementos da estrutura.</p>
+              <p>Dada a possibilidade de ocorrência de resultados falsos positivos, o Bloom filter é uma estrutura de dados especialmente adequada para cenários em que os métodos convencionais (não probabilísticos, livres de erros) para responder a testes de membresia demandem uma quantidade impraticável de espaço. Ademais, Bloom sugere o uso dessa estrutura para aplicações em que a grande maioria dos elementos testados não fazem parte do conjunto representado pela estrutura. De fato, o Bloom filter permite diminuir o consumo de espaço sem acrescer o tempo de rejeição(tempo médio dispendido por uma estrutura de dados para decidir que um dado elemento não pertence ao conjunto representado), o que ocorre com o custo de resultados falsos positivos e impossibilidade de remoção de elementos da estrutura.</p>
                 <div id="grafico">
                     <img src="../images/grafico.FalsoPositivoVSTamanhoDoFiltro.png" alt="Gráfico falsos positivos vs tamanho do filtro">
                 </div>
             </article>
         </section>
-        <section id="assintotica">
+      
+    <section id="assintotica">
             <h2>Complexidade de tempo</h2>
             <p>Em qualquer aplicação em que falsos positivos não causem problemas significativos, apenas uma aproximação de S pode ser armazenada em vez de guardar explicitamente o conjunto, fornecendo assim uma representação mais compacta que pode caber na memória. Se cada elemento que não pertence a S for um falso positivo com probabilidade de, no máximo, &#491;, então o número de bits necessários para armazenar a aproximação é aproximadamente n log₂ (1/&#491;), enquanto, para evitar falsos positivos, seria necessário armazenar S em pelo menos n log₂ n bits.</p>
             <p>Considere o conjunto S' &supseteq; S, que inclui os elementos armazenados, inclusive os falsos positivos. O conjunto S' é escolhido de forma que qualquer elemento que não pertença a S tenha probabilidade de, no máximo, &#491; de pertencer a S'. Um filtro de Bloom (Bloom, 1970) é uma estrutura de dados extremamente compacta e elegante para representar um conjunto S' adequado.</p>
@@ -76,7 +74,7 @@
             </article>
             <article id="quaotientFilter">
                 <h3>Quotient Filter</h3>
-                <ul>
+              <ul>
                     <li>Melhor desempenho poque requer apenas uma consulta de cache em média;</li>
                     <li>também suporta a exclusão, mas não elimina outros dados ao mesmo tempo;</li>
                     <li>Não altera a taxa de falso positivo.</li>
@@ -97,7 +95,7 @@
                 <h3>Redes P2P/ Overlay</h3>
                 <ul>
                     <li>Redes P2P de tamanho moderado;</li>
-                    <li>Reconciliação aproximada de conjuntos para entrega de conteúdo;</li>
+                  <li>Reconciliação aproximada de conjuntos para entrega de conteúdo;</li>
                     <li>Interseção de conjuntos para buscas por palavra-chave.</li>
                 </ul>
             </article>
@@ -118,20 +116,10 @@
                 </ul>
             </article>
         </section>
-        <section id="representacoes">
-            <article id="calculadora">
-                <h2>Calculadora de parâmetros ótimos</h2>
-                <form id="calcForm" method="post">
-                    <!--hashNumber = k-->
-                    <label for="hashNumber">Valor da função hash: </label><input type="number" name="hashNumber" id="hashNumber">
-                    <!--bits = m-->
-                    <label for="bits">Quantidade de bits: </label><input type="number" name="bits" id="bits">
-                    <!--numberOfElements = n-->
-                    <label for="numberOfElements">Número de elementos</label><input type="number" name="numberOfElements" id="numberOfElements">
-                    <input type="submit" id="calculate">
-                </form>
+      </ul>
             </article>
-            <article id="simulacao">
+        </section>
+        <section id="simulacao">
 
             </article>
         </section>
@@ -144,10 +132,19 @@
                 <li><a href="https://eximia.co/como-bloom-filter-pode-ser-utilizada-para-melhorar-a-performance/" target="_blank">JÚNIOR, Elemar. Como “Bloom Filter” pode ser utilizada para melhorar a performance. EximiaCo Insights, 30 jun. 2020</a></li>
             </ul>
         </section>
-    </main>
-    <footer>
 
+    </main>
+
+    <footer>
+        <p>© 2025 - Estrutura de Dados</p>
     </footer>
-    <script src="../js/calculadoraDeParametrosOtimos.js"></script>
+
+    <script>
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          document.getElementById('flower').classList.add('open');
+        }, 1000);
+      });
+    </script>
 </body>
 </html>

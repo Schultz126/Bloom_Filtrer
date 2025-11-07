@@ -1,0 +1,164 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #fafafa;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* ======== CABEÇALHO ======== */
+header {
+  background-color: #2f1852;
+  color: white;
+  text-align: center;
+  padding: 5.5rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+header h1 {
+  font-size: 4.5rem;
+  font-family: 'Pattaya', sans-serif; 
+  position: relative;
+  z-index: 10; /* fica acima da flor */
+  letter-spacing: 2px;
+}
+
+main {
+  max-width: 900px;
+  margin: 1rem auto;
+  padding: 0 0.5rem;
+}
+
+section {
+  margin-bottom: 2.5rem;
+}
+
+section h2 {
+  color: #004aad;
+  border-left: 4px solid #004aad;
+  padding-left: 0.5rem;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  text-align: justify;
+  margin-bottom: 1rem;
+}
+
+/* ======== GRÁFICO ======== */
+#grafico img {
+  display: block;
+  margin: 1rem auto;
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+}
+
+/* ======== RODAPÉ ======== */
+footer {
+  background-color: #004aad;
+  color: white;
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 0.9rem;
+}
+
+/* ======== FLOR ======== */
+.scene {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 25px;
+  left: 54%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.flower {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  transition: transform 2.5s ease-in-out;
+}
+
+/* Botão central */
+.bud {
+  position: absolute;
+  width: 78px;
+  height: 78px;
+  background: radial-gradient(circle at 70% 70%, #36e1ff, #3662ff);
+  border-radius: 50%;
+  top: 50%;
+  left: 15%;
+  transform: translate(-30%, -50%);
+  box-shadow: 0 0 25px rgba(100, 0, 160, 0.6);
+  z-index: 6;
+}
+
+/* Miolo */
+.center {
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  background: radial-gradient(circle, #efe7ff, #d0baff);
+  border-radius: 50%;
+  top: 50%;
+  left: 16%;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  transition: all 2.5s ease-in-out;
+  box-shadow: 0 0 20px rgba(255, 204, 0, 0.6);
+  z-index: 3;
+}
+
+/* Pétalas */
+.petal {
+  position: absolute;
+  width: 70px;
+  height: 110px;
+  background: radial-gradient(circle at 50% 30%, #36e1ff, #3662ff 60%, #3662ff);
+  border-radius: 60% 60% 0 0;
+  transform-origin: bottom center;
+  transform: scaleY(0.15);
+  opacity: 0.9;
+  transition: transform 2.5s ease-in-out, opacity 2s;
+}
+
+.petal:nth-child(3) { transform: rotate(0deg) scaleY(0.15); }
+.petal:nth-child(4) { transform: rotate(60deg) scaleY(0.15); }
+.petal:nth-child(5) { transform: rotate(120deg) scaleY(0.15); }
+.petal:nth-child(6) { transform: rotate(180deg) scaleY(0.15); }
+.petal:nth-child(7) { transform: rotate(240deg) scaleY(0.15); }
+.petal:nth-child(8) { transform: rotate(300deg) scaleY(0.15); }
+
+/* Estado aberto */
+.flower.open .petal {
+  transform: scaleY(1) rotate(var(--angle, 0deg)) translateY(-10px);
+  opacity: 1;
+}
+
+.flower.open .petal:nth-child(3) { --angle: 0deg; }
+.flower.open .petal:nth-child(4) { --angle: 60deg; }
+.flower.open .petal:nth-child(5) { --angle: 120deg; }
+.flower.open .petal:nth-child(6) { --angle: 180deg; }
+.flower.open .petal:nth-child(7) { --angle: 240deg; }
+.flower.open .petal:nth-child(8) { --angle: 300deg; }
+
+.flower.open .bud {
+  transform: translate(-50%, -50%) scale(0.3);
+  opacity: 0;
+}
+
+.flower.open .center {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
