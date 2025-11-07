@@ -19,12 +19,14 @@
 
 -->
 
+<!--Gabi, coloquei os estilos de forma provisória. Substitua-os como bem entender-->
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/textStyles.css">
+    
     <title>Bloom Filter</title>
 </head>
 <body>
@@ -51,7 +53,7 @@
             <article id="falsosPositivos">
                 <p>Dada a possibilidade de ocorrência de resultados falsos positivos, o Bloom filter é uma estrutura de dados especialmente adequada para cenários em que os métodos convencionais (não probabilísticos, livres de erros) para responder a testes de membresia demandem uma quantidade impraticável de espaço. Ademais, Bloom sugere o uso dessa estrutura para aplicações em que a grande maioria dos elementos testados não fazem parte do conjunto representado pela estrutura. Define-se tempo de rejeição como o tempo médio dispendido por uma estrutura de dados para decidir que um dado elemento não pertence ao conjunto representado. De fato, o Bloom filter permite diminuir o consumo de espaço sem acrescer o tempo de rejeição, o que ocorre com o custo de resultados falsos positivos e impossibilidade de remoção de elementos da estrutura.</p>
                 <div id="grafico">
-                    <img src="../images/Captura de tela 2025-11-04 094435.png" alt="Gráfico falsos positivos vs tamanho do filtro">
+                    <img src="../images/grafico.FalsoPositivoVSTamanhoDoFiltro.png" alt="Gráfico falsos positivos vs tamanho do filtro">
                 </div>
             </article>
         </section>
@@ -116,8 +118,22 @@
                 </ul>
             </article>
         </section>
-        <section id="simulacao">
+        <section id="representacoes">
+            <article id="calculadora">
+                <h2>Calculadora de parâmetros ótimos</h2>
+                <form id="calcForm" method="post">
+                    <!--hashNumber = k-->
+                    <label for="hashNumber">Valor da função hash: </label><input type="number" name="hashNumber" id="hashNumber">
+                    <!--bits = m-->
+                    <label for="bits">Quantidade de bits: </label><input type="number" name="bits" id="bits">
+                    <!--numberOfElements = n-->
+                    <label for="numberOfElements">Número de elementos</label><input type="number" name="numberOfElements" id="numberOfElements">
+                    <input type="submit" id="calculate">
+                </form>
+            </article>
+            <article id="simulacao">
 
+            </article>
         </section>
         <section id="referenciasBibliograficas">
             <h3>Referências Bibliográficas</h3>
@@ -132,5 +148,6 @@
     <footer>
 
     </footer>
+    <script src="../js/calculadoraDeParametrosOtimos.js"></script>
 </body>
 </html>
