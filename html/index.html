@@ -176,16 +176,16 @@
     <div id="representacaoVisual">
       <div id="headerVisual">
         <form>
-          <input type="text" required placeholder="Insira um elemento">
-          <button>Inserir</button>
-          <button>Buscar</button>
+          <input id="textInput" type="text" required placeholder="Insira um elemento">
+          <button id="insertButton">Inserir</button>
+          <button id="searchButton">Buscar</button>
         </form>
       </div>
       <div id="hashFunctions">
         <p>Funções de hash que determinam os bits a serem preenchidos na tabela</p>
-        <output name="hash1" id="hash_1"></output>
-        <output name="hash2" id="hash_2"></output>
-        <output name="hash3" id="hash_3"></output>
+        <label for="hash1">Função de hash 1: </label><output name="hash1" id="hash_1" class="hashVisual"></output>
+        <label for="hash2">Função de hash 2: </label><output name="hash2" id="hash_2" class="hashVisual"></output>
+        <label for="hash3">Função de hash 3: </label><output name="hash3" id="hash_3" class="hashVisual"></output>
       </div>
     </div>
     <section id="referenciasBibliograficas">

@@ -1,3 +1,5 @@
+// Variável global para controlar o tamanho do vetor
+var tamanhoDoVetor = 32;
 /**
  * 1. DJB2 Hash
  * Criado por Daniel J. Bernstein. É uma das funções de hash mais populares
@@ -42,3 +44,20 @@ function hash3(str) {
     }
     return hash >>> 0;
 }
+
+document.querySelector('button#insertButton').addEventListener('click', function(event) {
+    event.preventDefault();
+    let item = document.querySelector('input#textInput');
+    if(item.value === "" || item.value === null) {
+        return;
+    }
+    let hashBoxes = document.getElementsByClassName('hashVisual'); // vetor com os outputs em que serão colocados os valores de hash
+    // Preenche o vetor com os valores de cada função hash
+    let hash_values = [(hash1(item.value) % tamanhoDoVetor), (hash2(item.value) % tamanhoDoVetor), (hash3(item.value) % tamanhoDoVetor)];
+
+    for(let i = 0; i < 3; i++) {
+        hashBoxes[i].value = hash_values[i];
+    }
+
+    item.value = ""; // Limpa o input de texto
+})
