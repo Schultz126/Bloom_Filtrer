@@ -46,18 +46,37 @@ function hash3(str) {
 }
 
 document.querySelector('button#insertButton').addEventListener('click', function(event) {
-    event.preventDefault();
+    event.preventDefault(); // Impede o refresh da página
     let item = document.querySelector('input#textInput');
+    
+    // Impede que o botão funcione sem um input
     if(item.value === "" || item.value === null) {
         return;
     }
-    let hashBoxes = document.getElementsByClassName('hashVisual'); // vetor com os outputs em que serão colocados os valores de hash
-    // Preenche o vetor com os valores de cada função hash
-    let hash_values = [(hash1(item.value) % tamanhoDoVetor), (hash2(item.value) % tamanhoDoVetor), (hash3(item.value) % tamanhoDoVetor)];
+    
+    // Calcula os índices
+    let idx1 = hash1(item.value) % tamanhoDoVetor;
+    let idx2 = hash2(item.value) % tamanhoDoVetor;
+    let idx3 = hash3(item.value) % tamanhoDoVetor;
+    let hash_indexes = [idx1, idx2, idx3];
 
+    // Atualiza os outputs com os valores das funções hash
+    document.getElementById('hash_1').textContent = idx1;
+    document.getElementById('hash_2').textContent = idx2;
+    document.getElementById('hash_3').textContent = idx3;
+
+    // Atualiza a tabela visual (Bits)
     for(let i = 0; i < 3; i++) {
-        hashBoxes[i].value = hash_values[i];
+        // Montamos o ID do elemento baseado no cálculo para evitar de criar um vetor inteiro com as 32 caixas"
+        let idDoElemento = 'index' + hash_indexes[i];
+        let caixaBit = document.getElementById(idDoElemento);
+        
+        if (caixaBit) {
+            caixaBit.textContent = '1'; // Aqui muda o texto e pode ser colocado o CSS para uma animação
+        } else {
+            console.error("Elemento não encontrado para o ID:", idDoElemento);
+        }
     }
 
-    item.value = ""; // Limpa o input de texto
-})
+    item.value = ""; // Limpa o input
+});
