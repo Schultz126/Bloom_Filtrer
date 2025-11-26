@@ -73,9 +73,17 @@ document.querySelector('button#insertButton').addEventListener('click', function
         
         if (caixaBit) {
             caixaBit.textContent = '1'; // Aqui muda o texto e pode ser colocado o CSS para uma animação
+            
         } else {
             console.error("Elemento não encontrado para o ID:", idDoElemento);
         }
+    }
+    let elementosInseridos = document.querySelector('div#palavrasInseridas'); // Itens que foram colocados na lista
+    if(elementosInseridos) {
+        let newElement = document.createElement('p');
+        newElement.classList.add('addedItem'); // Classe já adicionada para que os novos elementos possam ser estilizados
+        newElement.textContent = item.value;
+        elementosInseridos.appendChild(newElement);
     }
 
     item.value = ""; // Limpa o input
