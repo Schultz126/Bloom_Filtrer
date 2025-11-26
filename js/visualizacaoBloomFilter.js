@@ -96,24 +96,29 @@ document.querySelector('button#insertButton').addEventListener('click', function
 document.querySelector('button#resetButton').addEventListener('click', function(event) {
     event.preventDefault(); // Previne o refresh da página
     let items = document.getElementsByClassName('tableElement');
-    if(items) { // Garante que o elemento DOM foi endereçado
-        for(let i = 0; i < tamanhoDoVetor; i++) { // Percorre o vetor inteiro para substituir os bits por 0
+    // Limpa a lista de bits
+    if(items) { 
+        for(let i = 0; i < tamanhoDoVetor; i++) { 
             items[i].textContent = '0'; 
         }
     }
-    let elementosInseridos = document.querySelector('div#listaDePalavras'); // Itens que foram colocados na lista
+    // Limpa a lista de elementos
+    let elementosInseridos = document.querySelector('div#listaDePalavras'); 
     if(elementosInseridos) {
-        elementosInseridos.innerHTML = ""; // Remove todas as tags inseridas 
+        elementosInseridos.innerHTML = ""; 
     }
+    // Remove a mensagem abaixo da lista de elementos
     let messageBoard = document.querySelector('div#mensagem');
     let avisoAntigo = messageBoard.querySelector('p.warning');
     if (avisoAntigo) {
         avisoAntigo.remove();
     }
+    // Limpa a caixa de inputs
     let item = document.querySelector('input#textInput');
     if(item) {
         item.value = "";
     }
+    // Limpa os três displays de hash
     document.getElementById('hash_1').textContent = "";
     document.getElementById('hash_2').textContent = "";
     document.getElementById('hash_3').textContent = "";
